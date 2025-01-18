@@ -1,0 +1,24 @@
+.navbar-menu {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    gap: 40px; /* Espaciado entre los elementos */
+  }
+  
+  .navbar-item {
+    text-align: center;
+  }
+  
+  .navbar-link {
+    text-decoration: none;
+    color: #333;
+    font-size: 1.2rem;
+    font-family: "Roboto", sans-serif;
+    transition: color 0.3s ease, transform 0.2s ease;
+  }
+  
+  .navbar-item:hover {
+    color: #24b46c; /* Cambiar color al pasar el mouse */
+    transform: scale(1.1); /* Efecto de zoom */
+  }

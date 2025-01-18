@@ -1,0 +1,88 @@
+
+  
+  
+  .box-pagos {
+    background: #ffffff;
+    padding: 50px;
+    border-radius: 8px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    flex: 1;
+    z-index: 2;
+    position: relative;
+    left: -460px;
+    top: 275px;
+    height: 450px; /* Ajusta el valor según sea necesario */
+  }
+
+  .box-reportesP {
+    background: #ffffff;
+    padding: 50px;
+    border-radius: 8px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    flex: 1;
+    z-index: 2 ; 
+    position: relative; 
+    top: -275px;
+    right: -400px;
+}
+  
+  h2 {
+    font-size: 40px;
+    text-align: center;
+    color: black;
+    margin-top: -50px;
+    margin-bottom: 70px;
+  }
+  
+
+  .RP{
+    font-size: 40px;
+    text-align: center;
+    color: black;
+    margin-top: -10px;
+    margin-bottom: 70px;
+  }
+
+  .RRP{
+    font-size: 40px;
+    text-align: center;
+    color: black;
+    margin-top: -10px;
+    margin-bottom: 70px;
+  }
+  
+  
+  .table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-bottom: 15px;
+  }
+
+  .table thead{
+    color: rgb(255, 255, 255);
+    background-color: #62152D;
+  }
+  
+  .table th,
+  .table td {
+    border: 1px solid #000000;
+    padding: 10px;
+    text-align: center;
+  }
+
+  td {
+    color: black;
+  }
+  
+  .buttons {
+    display: flex;
+    justify-content: space-between;
+  }
+  
+  .btn {
+    background-color: #e2e2e2;
+    border: none;
+    padding: 10px;
+    border-radius: 5px;
+    cursor: pointer;
+  }

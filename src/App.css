@@ -25,6 +25,15 @@ body::before {/* El ::before pseudo-elemento crea una capa adicional encima del 
   z-index: 1; /* Envía el overlay adelante del contenido */
 }
 
+.container {
+  transition: all 0.5s ease-in-out; /* Configura la animación */
+}
+
+.container.active {
+  transform: translateX(100px); /* O cualquier transformación */
+}
+
+
 
 @import url('https://fonts.googleapis.com/css2?family=Roboto+Mono:ital,wght@0,100..700;1,100..700&display=swap');
 
@@ -45,6 +54,19 @@ body::before {/* El ::before pseudo-elemento crea una capa adicional encima del 
   color: rgb(255, 255, 255);
   font-size: -15%;
 }
+
+input[type="text"], input[type="tel"], input[type="password"] {
+  color: black; /* Cambia el color del texto */
+}
+
+input[type="tel"] {
+  width: 100%; /* Opcional para ajustar el tamaño */
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  color: black; /* Cambia el color del texto */
+}
+
 
 .forgot-password{
   color: black;
