@@ -1,122 +1,167 @@
 /* Navbar */
 .navbar {
-    background-color: #f5f5f5;
-    border-radius: 20px;
-    width: 80%; /* Anchura para centrar */
-    position: fixed; /* Fija el Navbar en la parte superior */
-    top: 20px; /* Espaciado desde la parte superior */
-    left: 50%; /* Centra horizontalmente */
-    transform: translateX(-50%); /* Ajusta el centrado horizontal */
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* Sombra para un efecto flotante */
-    padding: 10px 20px; /* Espaciado interno */
-    z-index: 1000; /* Asegura que esté por encima de otros elementos */
-    display: flex;
-    justify-content: center;
-  }
-  
-  .navbar-menu {
-    list-style: none;
-    margin: 0;
-    padding: 0;
-    display: flex;
-    gap: 20px; /* Espaciado entre los elementos */
-  }
-  
-  .navbar-item {
-    text-align: center;
-  }
-  
-  .navbar-link {
-    text-decoration: none;
-    color: #333;
-    font-size: 1.2rem;
-    font-family: "Roboto", sans-serif;
-    transition: color 0.3s ease, transform 0.2s ease;
-  }
-  
-  .navbar-link:hover {
-    color: #24b46c; /* Cambiar color al pasar el mouse */
-    transform: scale(1.1); /* Efecto de zoom */
-  }
-  
-  /* General container */
-  .inicio-container {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    margin-top: 80px; /* Espacio debajo del Navbar */
-  }
-  
-  /* Cards container */
-  .cards-container {
-    display: grid;
-    grid-template-columns: repeat(2, 1fr); /* Dos columnas */
-    gap: 70px; /* Espaciado entre tarjetas */
-    padding: 50px;
-    width: 80%; /* Ajusta el ancho */
-  }
-  
-  /* Individual card */
-  .card {
-    background-color: #ffffff;
-    border-radius: 15px;
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    padding: 80px;
-    position: relative;
-  }
-  
-  .card-imagep {
-    background-image: url("./Imagenes/porton.png");
-    width: 120px; /* Ajusta el tamaño de la imagen */
-    height: 120px;
-    background-size: contain;
-    object-fit: cover;
-    margin-bottom: 40px;
-  }
-  .card-imagepro {
-    background-image: url("./Imagenes/propietario.png");
-    width: 120px; /* Ajusta el tamaño de la imagen */
-    height: 120px;
-    background-size: contain;
-    object-fit: cover;
-    margin-bottom: 10px;
+  background-color: #f5f5f5;
+  border-radius: 20px;
+  width: 80%; /* Anchura para centrar */
+  position: fixed; /* Fija el Navbar en la parte superior */
+  top: 20px; /* Espaciado desde la parte superior */
+  left: 50%; /* Centra horizontalmente */
+  transform: translateX(-50%); /* Ajusta el centrado horizontal */
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* Sombra para un efecto flotante */
+  padding: 10px 20px; /* Espaciado interno */
+  z-index: 1000; /* Asegura que esté por encima de otros elementos */
+  display: flex;
+  justify-content: center;
+}
+
+.navbar-menu {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  gap: 20px; /* Espaciado entre los elementos */
+}
+
+.navbar-item {
+  text-align: center;
+}
+
+.navbar-link {
+  text-decoration: none;
+  color: #333;
+  font-size: 1.2rem;
+  font-family: "Roboto", sans-serif;
+  transition: color 0.3s ease, transform 0.2s ease;
+}
+
+.navbar-link:hover {
+  color: #24b46c; /* Cambiar color al pasar el mouse */
+  transform: scale(1.1); /* Efecto de zoom */
+}
+
+/* General container */
+.inicio-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-top: 80px; /* Espacio debajo del Navbar */
+}
+
+/* Cards container */
+.cards-container {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr); /* Dos columnas */
+  gap: 70px; /* Espaciado entre tarjetas */
+  padding: 50px;
+  width: 80%; /* Ajusta el ancho */
+}
+
+/* Individual card */
+.card {
+  background-color: #ffffff;
+  border-radius: 15px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 80px;
+  position: relative;
+}
+
+.card-imagep,
+.card-imagepro,
+.card-imagepago,
+.card-imagem {
+  width: 120px; /* Ajusta el tamaño de la imagen */
+  height: 120px;
+  background-size: contain;
+  object-fit: cover;
+  margin-bottom: 40px;
+}
+
+.card-footer {
+  position: absolute;
+  bottom: 0;
+  width: 110%;
+  background-color: #62152D;
+  color: rgb(255, 255, 255);
+  text-align: center;
+  padding: 30px;
+  box-sizing: border-box;
+  z-index: 1;
+  border-radius: 15px;
+}
+
+.card-footer:hover {
+  background-color: #3b0c1b;
+  color: #ffffff;
+}
+
+.card-imagep {
+  background-image: url("./Imagenes/porton.png");
+  width: 120px; /* Ajusta el tamaño de la imagen */
+  height: 120px;
+  background-size: contain;
+  object-fit: cover;
+  margin-bottom: 40px;
+}
+.card-imagepro {
+  background-image: url("./Imagenes/propietario.png");
+  width: 120px; /* Ajusta el tamaño de la imagen */
+  height: 120px;
+  background-size: contain;
+  object-fit: cover;
+  margin-bottom: 10px;
+}
+
+.card-imagepago {
+  background-image: url("./Imagenes/pago.png");
+  width: 120px; /* Ajusta el tamaño de la imagen */
+  height: 120px;
+  background-size: contain;
+  object-fit: cover;
+  margin-bottom: 40px;
+}
+.card-imagem {
+  background-image: url("./Imagenes/multa.png");
+  width: 120px; /* Ajusta el tamaño de la imagen */
+  height: 120px;
+  background-size: contain;
+  object-fit: cover;
+  margin-bottom: 10px;
+}
+
+/* Media Queries para 1366x768 */
+@media (max-width: 1366px) {
+  .navbar {
+      width: 90%;
+      padding: 8px 15px;
   }
 
-  .card-imagepago {
-    background-image: url("./Imagenes/pago.png");
-    width: 120px; /* Ajusta el tamaño de la imagen */
-    height: 120px;
-    background-size: contain;
-    object-fit: cover;
-    margin-bottom: 40px;
+  .navbar-link {
+      font-size: 1rem;
   }
+
+  .cards-container {
+      gap: 50px; /* Reduce el espacio entre tarjetas */
+      padding: 30px;
+      width: 90%;
+  }
+
+  .card {
+      padding: 60px; /* Reduce el tamaño del padding */
+  }
+
+  .card-imagep,
+  .card-imagepro,
+  .card-imagepago,
   .card-imagem {
-    background-image: url("./Imagenes/multa.png");
-    width: 120px; /* Ajusta el tamaño de la imagen */
-    height: 120px;
-    background-size: contain;
-    object-fit: cover;
-    margin-bottom: 10px;
+      width: 100px; /* Reduce el tamaño de las imágenes */
+      height: 100px;
+      margin-bottom: 30px;
   }
 
   .card-footer {
-    position: absolute;
-    bottom: 0;
-    width: 110%;
-    background-color: #62152D;
-    color: rgb(255, 255, 255);
-    text-align: center;
-    padding: 30px;
-    box-sizing: border-box;
-    z-index: 1;
-    border-radius: 15px;
+      padding: 20px; /* Reduce el padding del footer */
   }
-
-  .card-footer:hover {
-    background-color: #3b0c1b;
-    color: #ffffff; /* Opcional: cambia el color del texto si es necesario */
 }
-

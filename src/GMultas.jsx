@@ -1,38 +1,70 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
+import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import "./Navbar.css";
-import "./GPago.css";
+import "./GMultas.css";
 
 function GMultas() {
   const navigate = useNavigate();
+  const [formData, setFormData] = useState({
+    cantidad: "",
+    departamento: "",
+    torre: "",
+    comentarios: ""
+  });
+  const [multas, setMultas] = useState([]); // Estado para almacenar las multas
 
-  const InicioNV = () => {
-    navigate("/inicio"); 
+  // Obtener datos de la base de datos al montar el componente
+  useEffect(() => {
+    const fetchMultas = async () => {
+      try {
+        const response = await axios.get("http://localhost:4000/api/multas"); // Ajusta la URL según tu backend
+        setMultas(response.data); // Asigna los datos obtenidos al estado
+      } catch (error) {
+        console.error("Error al obtener las multas:", error);
+      }
+    };
+
+    fetchMultas();
+  }, []);
+
+  const handleChange = (e) => {
+    const { name, value } = e.target;
+    setFormData({
+      ...formData,
+      [name]: value
+    });
   };
 
-  const GMultas = () => {
-    navigate("/GMultas"); 
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    try {
+      const response = await axios.post("http://localhost:4000/api/multas", formData); // Ajusta la URL de acuerdo a tu backend
+      console.log("Multa registrada:", response.data);
+      alert("La multa ha sido guardada");
+      setFormData({
+        cantidad: "",
+        departamento: "",
+        torre: "",
+        comentarios: ""
+      });
+      // Refrescar las multas después de registrar una nueva
+      setMultas((prev) => [...prev, response.data]);
+    } catch (error) {
+      console.error("Error al registrar la multa", error);
+      alert("Hubo un problema al guardar los datos");
+    }
   };
 
-  const GPagos = () => {
-    navigate("/GPagos"); 
-  };
-
-  const GPortones = () => {
-    navigate("/GPortones"); 
-  };
-  
-  const GInquilinos = () => {
-    navigate("/GInquilinos"); 
-  };
-
-  const CerraSesion = () => {
-    navigate("/"); 
-  };
+  const InicioNV = () => navigate("/inicio");
+  const GMultas = () => navigate("/GMultas");
+  const GPagos = () => navigate("/GPagos");
+  const GPortones = () => navigate("/GPortones");
+  const GInquilinos = () => navigate("/GInquilinos");
+  const CerraSesion = () => navigate("/");
 
   return (
     <div className="inicio-containerGM">
-
       {/* Navbar */}
       <nav className="navbar">
         <ul className="navbar-menu">
@@ -73,21 +105,53 @@ function GMultas() {
 
       {/* Contenedor 1: Registrar Multa */}
       <div className="box-registrar-multa">
-    <h2 className="roboto-mono">Registrar Multa</h2>
-    <form className="form-registrar">
-        <div className="input-icon">
-            <input type="number" className="input-cantidad" placeholder="Cantidad" min="0" step="0.01"/>
-        </div>
-        <div className="input-icon">
-            <input type="text" className="input-departamento" placeholder="Departamento" />
-        </div>
-        <div className="input-icon">
-            <input type="text" className="input-torre" placeholder="Torre" />
-        </div>
-    </form>
-         <input className="COM" placeholder="Comentarios" />
-         <button type="submit" className="btn-registrar">Registrar</button>
-</div>
+        <h2 className="roboto-mono">Registrar Multa</h2>
+        <form className="form-registrar" onSubmit={handleSubmit}>
+          <div className="input-icon">
+            <input
+              type="number"
+              className="input-cantidad"
+              placeholder="Cantidad"
+              min="0"
+              step="0.01"
+              name="cantidad"
+              value={formData.cantidad}
+              onChange={handleChange}
+            />
+          </div>
+          <div className="input-icon">
+            <input
+              type="text"
+              className="input-departamento"
+              placeholder="Departamento"
+              name="departamento"
+              value={formData.departamento}
+              onChange={handleChange}
+            />
+          </div>
+          <div className="input-icon">
+            <input
+              type="text"
+              className="input-torre"
+              placeholder="Torre"
+              name="torre"
+              value={formData.torre}
+              onChange={handleChange}
+            />
+          </div>
+        </form>
+        <input
+            type="text"
+            className="COM"
+            placeholder="Comentarios"
+            name="comentarios"
+            value={formData.comentarios}
+            onChange={handleChange}
+          />
+          <button type="submit" className="btn-registrar">
+            Registrar
+          </button>
+      </div>
 
       {/* Contenedor 2: Multas */}
       <div className="box-multas">
@@ -103,106 +167,17 @@ function GMultas() {
             </tr>
           </thead>
           <tbody>
-            {/* Aquí puedes mapear datos dinámicos */}
-            <tr>
-                <td>-</td>
-                <td>-</td>
-                <td>-</td>
-                <td>-</td>
-                <td>-</td>
-            </tr>
-            <tr>
-                <td>-</td>
-                <td>-</td>
-                <td>-</td>
-                <td>-</td>
-                <td>-</td>
-            </tr>
-            <tr>
-                <td>-</td>
-                <td>-</td>
-                <td>-</td>
-                <td>-</td>
-                <td>-</td>
-            </tr>
-            <tr>
-                <td>-</td>
-                <td>-</td>
-                <td>-</td>
-                <td>-</td>
-                <td>-</td>
-            </tr>
-            <tr>
-                <td>-</td>
-                <td>-</td>
-                <td>-</td>
-                <td>-</td>
-                <td>-</td>
-            </tr>
+            {multas.map((multa, index) => (
+              <tr key={index}>
+                <td>{multa.torre}</td>
+                <td>{multa.departamento}</td>
+                <td>{multa.cantidad}</td>
+                <td>{multa.comentarios}</td>
+                <td>{new Date(multa.createdAt).toLocaleDateString()}</td>
+              </tr>
+            ))}
           </tbody>
         </table>
-        <div className="buttons">
-          <button className="btn">Historial</button>
-          <button className="btn">Gestionar</button>
-        </div>
-      </div>
-
-      {/* Contenedor 3: Reportes */}
-      <div className="box-reportes">
-        <h2 className="roboto-mono RR">Reportes</h2>
-        <table className="table">
-          <thead>
-            <tr>
-              <th>Torre</th>
-              <th>Departamento</th>
-              <th>Teléfono</th>
-              <th>Estado</th>
-              <th>Fecha</th>
-            </tr>
-          </thead>
-          <tbody>
-            {/* Aquí puedes mapear datos dinámicos */}
-            <tr>
-                <td>-</td>
-                <td>-</td>
-                <td>-</td>
-                <td>-</td>
-                <td>-</td>
-            </tr>
-            <tr>
-                <td>-</td>
-                <td>-</td>
-                <td>-</td>
-                <td>-</td>
-                <td>-</td>
-            </tr>
-            <tr>
-                <td>-</td>
-                <td>-</td>
-                <td>-</td>
-                <td>-</td>
-                <td>-</td>
-            </tr>
-            <tr>
-                <td>-</td>
-                <td>-</td>
-                <td>-</td>
-                <td>-</td>
-                <td>-</td>
-            </tr>
-            <tr>
-                <td>-</td>
-                <td>-</td>
-                <td>-</td>
-                <td>-</td>
-                <td>-</td>
-            </tr>
-          </tbody>
-        </table>
-        <div className="buttons">
-          <button className="btn">Historial</button>
-          <button className="btn">Gestionar</button>
-        </div>
       </div>
     </div>
   );
