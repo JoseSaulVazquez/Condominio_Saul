@@ -1,30 +1,48 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
+import axios from "axios";  // Importa axios para hacer peticiones HTTP
 import "./App.css";
 
 function App() {
-  const [isActive, setIsActive] = useState(false);
+  const [numero_tel, setNumeroTel] = useState("");
+  const [contrasena, setContrasena] = useState("");
+  const [error, setError] = useState("");
   const navigate = useNavigate();
 
   // Manejador para iniciar sesión y activar la animación
-  const handleLoginClick = () => {
-    setIsActive(false);
+  const handleLoginClick = async () => {
+    try {
+      const response = await axios.post("http://localhost:4000/api/usuarios/login", {  // Ruta al backend para inicio de sesión
+        numero_tel,
+        contrasena
+      });
+
+      if (response.data.rol === "Admin") {
+        navigate("/inicio");  // Redirige a la interfaz del Admin
+      } else if (response.data.rol === "Inquilino") {
+        navigate("/InicioIN");  // Redirige a la interfaz del Inquilino
+      } else {
+        setError("Rol no reconocido");  // Manejar caso cuando no se reconoce el rol
+      }
+    } catch (err) {
+      setError("Número de teléfono o contraseña incorrectos");  // Manejar errores de login
+    }
   };
 
   const handleLoginFormClick = () => {
-    setIsActive(true); // Activa la animación
+    setError("");  // Limpiar errores cuando se muestra el formulario
   };
 
   // Manejador cuando la transición termina
   const handleTransitionEnd = () => {
-    if (isActive) {
-      navigate("/inicio"); // Redirige después de la animación
+    if (error === "") {
+      navigate("/"); // Redirige a la página de inicio si no hay errores
     }
   };
 
   return (
     <div
-      className={`container ${isActive ? "active" : ""}`}
+      className={`container ${error ? "active" : ""}`}
       id="container"
       onTransitionEnd={handleTransitionEnd} // Detecta el final de la transición
     >
@@ -35,8 +53,10 @@ function App() {
             type="tel"
             id="phone"
             placeholder="Número Telefónico"
-            maxLength="10" /* Máximo de 15 dígitos por ejemplo */
-            pattern="\d{10}" /* Esto asegura que el número tenga entre 10 a 15 dígitos. */
+            maxLength="10"
+            pattern="\d{10}"
+            value={numero_tel}
+            onChange={(e) => setNumeroTel(e.target.value)}
             required
           />
 
@@ -44,23 +64,18 @@ function App() {
             type="password"
             id="password"
             placeholder="Contraseña"
+            value={contrasena}
+            onChange={(e) => setContrasena(e.target.value)}
+            required
           />
-          <a href="#" className="forgot-password">
-            ¿Olvidaste tu contraseña?
-          </a>
+
+          {error && <p className="error-message">{error}</p>}  {/* Mostrar mensajes de error */}
+          
         </form>
       </div>
+
       <div className="toggle-container">
         <div className="toggle">
-          <div className="toggle-panel toggle-left">
-            <button
-              className="hidden"
-              id="loginbtn"
-              onClick={handleLoginClick}
-            >
-              Inicia sesión
-            </button>
-          </div>
           <div className="toggle-panel toggle-right">
             <div className="roboto-mono2">
               <h1>BIENVENIDO</h1>
@@ -68,7 +83,7 @@ function App() {
               <button
                 type="button"
                 id="loginBtn"
-                onClick={handleLoginFormClick}
+                onClick={handleLoginClick}
               >
                 Iniciar sesión
               </button>

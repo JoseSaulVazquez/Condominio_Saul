@@ -139,8 +139,7 @@ function GMultas() {
               onChange={handleChange}
             />
           </div>
-        </form>
-        <input
+          <input
             type="text"
             className="COM"
             placeholder="Comentarios"
@@ -151,6 +150,7 @@ function GMultas() {
           <button type="submit" className="btn-registrar">
             Registrar
           </button>
+        </form>
       </div>
 
       {/* Contenedor 2: Multas */}
