@@ -18,7 +18,7 @@ function GMultas() {
   useEffect(() => {
     const fetchMultas = async () => {
       try {
-        const response = await axios.get("https://api-condominio-nwep.onrender.com"); // Ajusta la URL según tu backend
+        const response = await axios.get("https://api-condominio-nwep.onrender.com/api/multas"); // Ajusta la URL según tu backend
         setMultas(response.data); // Asigna los datos obtenidos al estado
       } catch (error) {
         console.error("Error al obtener las multas:", error);
@@ -39,7 +39,7 @@ function GMultas() {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      const response = await axios.post("https://api-condominio-nwep.onrender.com", formData); // Ajusta la URL de acuerdo a tu backend
+      const response = await axios.post("https://api-condominio-nwep.onrender.com/api/multas", formData); // Ajusta la URL de acuerdo a tu backend
       console.log("Multa registrada:", response.data);
       alert("La multa ha sido guardada");
       setFormData({

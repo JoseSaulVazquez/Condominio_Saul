@@ -12,7 +12,7 @@ function App() {
   
   const handleLoginClick = async () => {
     try {
-      const response = await axios.post("https://api-condominio-nwep.onrender.com", {  
+      const response = await axios.post("https://api-condominio-nwep.onrender.com/api/usuarios/login", {  
         numero_tel,
         contrasena
       });
