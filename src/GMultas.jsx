@@ -44,8 +44,8 @@ function GMultas() {
       alert("La multa ha sido guardada");
       setFormData({
         cantidad: "",
-        departamento: "",
         torre: "",
+        departamento: "",
         comentarios: ""
       });
       // Refrescar las multas después de registrar una nueva
@@ -122,20 +122,20 @@ function GMultas() {
           <div className="input-icon">
             <input
               type="text"
-              className="input-departamento"
-              placeholder="Departamento"
-              name="departamento"
-              value={formData.departamento}
+              className="input-torre"
+              placeholder="Torre"
+              name="torre"
+              value={formData.torre}
               onChange={handleChange}
             />
           </div>
           <div className="input-icon">
             <input
               type="text"
-              className="input-torre"
-              placeholder="Torre"
-              name="torre"
-              value={formData.torre}
+              className="input-departamento"
+              placeholder="Departamento"
+              name="departamento"
+              value={formData.departamento}
               onChange={handleChange}
             />
           </div>
