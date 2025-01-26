@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import axios from "axios";  // Importa axios para hacer peticiones HTTP
+import axios from "axios";  
 import "./App.css";
 
 function App() {
@@ -9,23 +9,23 @@ function App() {
   const [error, setError] = useState("");
   const navigate = useNavigate();
 
-  // Manejador para iniciar sesión y activar la animación
+  
   const handleLoginClick = async () => {
     try {
-      const response = await axios.post("http://localhost:4000/api/usuarios/login", {  // Ruta al backend para inicio de sesión
+      const response = await axios.post("https://api-condominio-nwep.onrender.com", {  
         numero_tel,
         contrasena
       });
 
       if (response.data.rol === "Admin") {
-        navigate("/inicio");  // Redirige a la interfaz del Admin
+        navigate("/inicio");  
       } else if (response.data.rol === "Inquilino") {
-        navigate("/InicioIN");  // Redirige a la interfaz del Inquilino
+        navigate("/InicioIN");  
       } else {
-        setError("Rol no reconocido");  // Manejar caso cuando no se reconoce el rol
+        setError("Rol no reconocido");  
       }
     } catch (err) {
-      setError("Número de teléfono o contraseña incorrectos");  // Manejar errores de login
+      setError("Número de teléfono o contraseña incorrectos");  
     }
   };
 
