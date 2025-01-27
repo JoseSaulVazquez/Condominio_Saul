@@ -14,7 +14,7 @@ function InicioIN() {
       navigate("/"); // Redirigir al login si no hay token
     }
 
-    const socket = io("http://localhost:4000"); // URL del servidor API
+    const socket = io("https://api-condominio-nwep.onrender.com"); // URL del servidor API
 
     // Escuchar las notificaciones de nuevas multas
     socket.on("nuevaMulta", (data) => {
