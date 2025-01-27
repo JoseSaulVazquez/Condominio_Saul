@@ -1,34 +1,36 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import "./InicioIN.css";
-
-
 
 function InicioIN() {
   const navigate = useNavigate();
 
-  const InicioIN = () => {
-    navigate(""); 
-  };
+  useEffect(() => {
+    const token = localStorage.getItem('token');
+    if (!token) {
+      navigate("/"); // Redirigir al login si no hay token
+    }
+  }, [navigate]);
 
   const GMultas = () => {
-    navigate(""); 
+    navigate("/multas"); // Redirigir a la página de multas
   };
 
   const GPagos = () => {
-    navigate(""); 
+    navigate("/pagos"); // Redirigir a la página de pagos
   };
 
   const GPortones = () => {
-    navigate(""); 
+    navigate("/portones"); // Redirigir a la página de portones
   };
-  
+
   const GInquilinos = () => {
-    navigate(""); 
+    navigate("/inquilinos"); // Redirigir a la página de inquilinos
   };
 
   const CerraSesion = () => {
-    navigate("/"); 
+    localStorage.removeItem('token'); // Eliminar el token
+    navigate("/"); // Redirigir al login
   };
 
   return (
@@ -37,9 +39,7 @@ function InicioIN() {
       <nav className="navbar">
         <ul className="navbar-menu">
           <li className="navbar-item">
-            <a onClick={InicioIN} className="navbar-link">
-              Inicio
-            </a>
+            <a className="navbar-link">Inicio</a>
           </li>
           <li className="navbar-item">
             <a onClick={CerraSesion} className="navbar-link">
@@ -56,7 +56,7 @@ function InicioIN() {
           <button className="card-footer" onClick={GMultas}>Multas</button>
         </div>
         <div className="card">
-          <div className="card-imagepago"></div>          
+          <div className="card-imagepago"></div>
           <button className="card-footer" onClick={GPagos}>Pagos</button>
         </div>
         <div className="card">

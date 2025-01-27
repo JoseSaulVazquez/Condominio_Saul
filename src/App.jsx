@@ -12,22 +12,26 @@ function App() {
   
   const handleLoginClick = async () => {
     try {
-      const response = await axios.post("http://localhost:4000/api/usuarios/login", {  
+      const response = await axios.post("http://localhost:4000/api/usuarios/login", {
         numero_tel,
         contrasena
       });
-
-      if (response.data.rol === "Admin") {
-        navigate("/inicio");  
-      } else if (response.data.rol === "Inquilino") {
-        navigate("/InicioIN");  
+  
+      const { token, rol } = response.data;
+      localStorage.setItem('token', token); // Almacenar el token en localStorage
+  
+      if (rol === "Admin") {
+        navigate("/inicio");
+      } else if (rol === "Inquilino") {
+        navigate("/InicioIN");
       } else {
-        setError("Rol no reconocido");  
+        setError("Rol no reconocido");
       }
     } catch (err) {
-      setError("Número de teléfono o contraseña incorrectos");  
+      setError("Número de teléfono o contraseña incorrectos");
     }
   };
+  
 
   const handleLoginFormClick = () => {
     setError("");  // Limpiar errores cuando se muestra el formulario
