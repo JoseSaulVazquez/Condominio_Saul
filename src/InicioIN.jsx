@@ -1,59 +1,94 @@
 import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import io from "socket.io-client";
+import axios from "axios";
+import { FaBell } from "react-icons/fa";
 import "./InicioIN.css";
 
 function InicioIN() {
-  const [notificacion, setNotificacion] = useState(null);
   const navigate = useNavigate();
+  const [notificaciones, setNotificaciones] = useState([]);
+  const [mostrarPanel, setMostrarPanel] = useState(false);
 
-  // Verificar si el token existe en el almacenamiento local
   useEffect(() => {
-    const token = localStorage.getItem('token');
+    const token = localStorage.getItem("token");
     if (!token) {
       navigate("/"); // Redirigir al login si no hay token
+      return;
     }
 
-    const socket = io("https://api-condominio-nwep.onrender.com"); // URL del servidor API
-
-    // Escuchar las notificaciones de nuevas multas
-    socket.on("nuevaMulta", (data) => {
-      // Verificar si la multa corresponde al usuario
-      const usuario = JSON.parse(localStorage.getItem('usuario')); // Se asume que el usuario está guardado en localStorage
-      if (data.torre === usuario.torre && data.departamento === usuario.departamento) {
-        setNotificacion(data);
-        alert(`Nueva Multa Registrada\nCantidad: ${data.cantidad}\nComentarios: ${data.comentarios}`);
+    const obtenerNotificaciones = async () => {
+      try {
+        const usuarioId = obtenerIdDesdeToken(token);
+        const response = await axios.get(
+          `http://localhost:4000/api/usuarios/notificaciones/${usuarioId}`
+        );
+        setNotificaciones(response.data);
+      } catch (error) {
+        console.error("Error al obtener notificaciones:", error);
       }
-    });
-
-    return () => {
-      socket.disconnect();
     };
+
+    obtenerNotificaciones();
   }, [navigate]);
 
-  // Funciones para navegar a diferentes rutas
+  const obtenerIdDesdeToken = (token) => {
+    if (!token) return null;
+    try {
+      const payload = JSON.parse(atob(token.split(".")[1]));
+      return payload.id;
+    } catch (error) {
+      console.error("Error al decodificar el token", error);
+      return null;
+    }
+  };
+
   const GMultas = () => navigate("/multas");
   const GPagos = () => navigate("/pagos");
   const GPortones = () => navigate("/portones");
   const GInquilinos = () => navigate("/inquilinos");
-  
-  // Función para cerrar sesión
+
   const CerraSesion = () => {
-    localStorage.removeItem('token'); // Eliminar el token
-    localStorage.removeItem('usuario'); // Eliminar el usuario
-    navigate("/"); // Redirigir al login
+    localStorage.removeItem("token");
+    localStorage.removeItem("usuario");
+    navigate("/");
   };
 
   return (
     <div className="inicio-container">
       {/* Navbar */}
-      <nav className="navbar">
-        <ul className="navbar-menu">
-          <li className="navbar-item">
-            <a className="navbar-link">Inicio</a>
+      <nav className="navbar2">
+        <ul className="navbar-menu2">
+          <li className="navbar-item2">
+            <a className="navbar-link2">Inicio</a>
           </li>
-          <li className="navbar-item">
-            <a onClick={CerraSesion} className="navbar-link">
+          <li className="navbar-item2">
+            <div className="notification-container">
+              <div
+                className="notification-icon"
+                onClick={() => setMostrarPanel(!mostrarPanel)}
+              >
+                <FaBell />
+                {notificaciones.length > 0 && (
+                  <span className="notification-badge">{notificaciones.length}</span>
+                )}
+              </div>
+              {mostrarPanel && (
+                <div className="notification-panel">
+                  {notificaciones.length > 0 ? (
+                    notificaciones.map((notif, index) => (
+                      <div key={index} className="notification-item">
+                        {notif.mensaje}
+                      </div>
+                    ))
+                  ) : (
+                    <p>No hay notificaciones</p>
+                  )}
+                </div>
+              )}
+            </div>
+          </li>
+          <li className="navbar-item2">
+            <a onClick={CerraSesion} className="navbar-link2">
               Cerrar sesión
             </a>
           </li>
@@ -79,17 +114,6 @@ function InicioIN() {
           <button className="card-footer" onClick={GInquilinos}>Inquilinos</button>
         </div>
       </div>
-
-      {/* Notificación de nueva multa */}
-      {notificacion && (
-        <div className="notification">
-          <h3>Nueva Multa</h3>
-          <p>Torre: {notificacion.torre}</p>
-          <p>Departamento: {notificacion.departamento}</p>
-          <p>Cantidad: {notificacion.cantidad}</p>
-          <p>Comentarios: {notificacion.comentarios}</p>
-        </div>
-      )}
     </div>
   );
 }
