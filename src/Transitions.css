@@ -1,0 +1,33 @@
+/* Transición para el botón de carga */  
+.fade-enter { opacity: 0; }  
+.fade-enter-active { opacity: 1; transition: opacity 300ms; }  
+.fade-exit { opacity: 1; }  
+.fade-exit-active { opacity: 0; transition: opacity 300ms; }  
+
+/* Modal */  
+.modal-enter { transform: scale(0.8); opacity: 0; }  
+.modal-enter-active { transform: scale(1); opacity: 1; transition: all 300ms ease-in-out; }  
+.modal-exit { transform: scale(1); opacity: 1; }  
+.modal-exit-active { transform: scale(0.8); opacity: 0; transition: all 300ms ease-in-out; }  
+
+.modal-overlay {  
+  position: fixed;  
+  top: 0;  
+  left: 0;  
+  width: 100%;  
+  height: 100%;  
+  background: rgba(0, 0, 0, 0.5);  
+  display: flex;  
+  justify-content: center;  
+  align-items: center;  
+  z-index: 9999;  /* Asegura que esté por encima de todos los elementos */  
+}  
+
+.modal-content {  
+  background: white; 
+  color: black;
+  padding: 20px;  
+  border-radius: 8px;  
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);  
+  z-index: 10000;  /* Mayor que el overlay para estar siempre visible */  
+}  
