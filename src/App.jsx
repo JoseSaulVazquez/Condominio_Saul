@@ -18,7 +18,7 @@ function App() {
       });
   
       const { token, rol } = response.data;
-      localStorage.setItem('token', token); // Almacenar el token en localStorage
+      localStorage.setItem('token', token); 
   
       if (rol === "Admin") {
         navigate("/inicio");

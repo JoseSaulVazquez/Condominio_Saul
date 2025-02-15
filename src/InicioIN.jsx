@@ -20,11 +20,20 @@ function InicioIN() {
       try {
         const usuarioId = obtenerIdDesdeToken(token);
         const response = await axios.get(
-          `http://localhost:4000/api/usuarios/notificaciones/${usuarioId}`
+          `http://localhost:4000/api/usuarios/notificaciones/${usuarioId}`,
+          {
+            headers: {
+              Authorization: `${token}`, // Incluir el token en el encabezado
+            },
+          }
         );
         setNotificaciones(response.data);
       } catch (error) {
         console.error("Error al obtener notificaciones:", error);
+        if (error.response && error.response.status === 401) {
+          // Si el token no es válido, redirigir al login
+          navigate("/");
+        }
       }
     };
 
@@ -55,7 +64,6 @@ function InicioIN() {
 
   return (
     <div className="inicio-container">
-      {/* Navbar */}
       <nav className="navbar2">
         <ul className="navbar-menu2">
           <li className="navbar-item2">
@@ -95,7 +103,6 @@ function InicioIN() {
         </ul>
       </nav>
 
-      {/* Contenido de la pantalla */}
       <div className="roboto-mono cards-container">
         <div className="card">
           <div className="card-imagem"></div>
