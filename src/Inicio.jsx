@@ -1,33 +1,50 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
+import axios from "axios";
 import "./Inicio.css";
-
 
 function Inicio() {
   const navigate = useNavigate();
 
+  useEffect(() => {
+    const token = localStorage.getItem("token");
+    if (!token) {
+      navigate("/"); // Redirigir al login si no hay token
+    }
+  }, [navigate]);
+
+  const handleLogout = async () => {
+    try {
+      const token = localStorage.getItem("token");
+      await axios.post("http://localhost:4000/api/usuarios/logout", {}, {
+        headers: { Authorization: token }
+      });
+
+      localStorage.removeItem("token");
+      navigate("/"); // Redirigir a la página de inicio (login)
+    } catch (error) {
+      console.error("Error al cerrar sesión", error);
+    }
+  };
+
   const InicioNV = () => {
-    navigate("/inicio"); 
+    navigate("/inicio");
   };
 
   const GMultas = () => {
-    navigate("/GMultas"); 
+    navigate("/GMultas");
   };
 
   const GPagos = () => {
-    navigate("/GPagos"); 
+    navigate("/GPagos");
   };
 
   const GPortones = () => {
-    navigate("/GPortones"); 
-  };
-  
-  const GInquilinos = () => {
-    navigate("/GInquilinos"); 
+    navigate("/GPortones");
   };
 
-  const CerraSesion = () => {
-    navigate("/"); 
+  const GInquilinos = () => {
+    navigate("/GInquilinos");
   };
 
   return (
@@ -41,7 +58,7 @@ function Inicio() {
             </a>
           </li>
           <li className="navbar-item">
-            <a onClick={CerraSesion} className="navbar-link">
+            <a onClick={handleLogout} className="navbar-link">
               Cerrar sesión
             </a>
           </li>

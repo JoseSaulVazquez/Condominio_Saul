@@ -18,7 +18,7 @@ function App() {
       });
   
       const { token, rol } = response.data;
-      localStorage.setItem('token', token); 
+      localStorage.setItem('token', token); // Guardar token en localStorage
   
       if (rol === "Admin") {
         navigate("/inicio");
@@ -31,6 +31,22 @@ function App() {
       setError("Número de teléfono o contraseña incorrectos");
     }
   };
+
+  const handleLogout = async () => {
+    try {
+      const token = localStorage.getItem('token');
+      await axios.post("http://localhost:4000/api/usuarios/logout", {}, {
+        headers: { Authorization: token }
+      });
+  
+      localStorage.removeItem('token');
+      navigate("/");
+    } catch (error) {
+      console.error("Error al cerrar sesión", error);
+    }
+  };
+  
+  
   
 
   const handleLoginFormClick = () => {
